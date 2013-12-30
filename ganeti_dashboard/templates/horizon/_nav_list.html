@@ -1,0 +1,20 @@
+{% load horizon i18n %}
+
+{% with components|has_permissions_on_list:user as filtered_components %}
+{% if filtered_components|length > 1 %}
+<div id="dashboard_switcher" class="dropdown switcher_bar" tabindex='1'>
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#dashboard_switcher">
+    <h4>{% trans "Dashboard" %}</h4>
+    <h3>{{ request.horizon.dashboard }}</h3>
+  </a>
+  <ul class="dropdown-menu">
+    <li class='divider'></li>
+    {% for component in filtered_components %}
+      <li{% if current == component.slug %} class="active"{% endif %}>
+        <a href="{{ component.get_absolute_url }}" tabindex='1'>{{ component.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endwith %}
