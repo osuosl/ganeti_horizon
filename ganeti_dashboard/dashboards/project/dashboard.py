@@ -6,8 +6,8 @@ import horizon
 class Project(horizon.Dashboard):
     name = _("Project")
     slug = "project"
-    panels = ()  # Add your panels here.
-    default_panel = ''  # Specify the slug of the dashboard's default panel.
+    panels = ('instances',)
+    default_panel = 'instances'
 
 
 horizon.register(Project)

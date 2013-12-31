@@ -31,7 +31,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 ROOT_URLCONF = 'openstack_dashboard.urls'
 
 HORIZON_CONFIG = {
-    'dashboards': ('project', 'admin', 'visualizations', 'settings',),
+    'dashboards': ('project', 'admin', 'settings',),
     'default_dashboard': 'project',
     'user_home': 'openstack_dashboard.views.get_user_home',
     'ajax_queue_limit': 10,
@@ -79,7 +79,8 @@ STATICFILES_FINDERS = (
 
 less_binary = os.path.join(BIN_DIR, 'less', 'lessc')
 COMPRESS_PRECOMPILERS = (
-    ('text/less', (less_binary + ' {infile} {outfile}')),
+    #('text/less', (less_binary + ' {infile} {outfile}')),
+    ('text/less', ('lesscpy {infile}')),
 )
 
 COMPRESS_CSS_FILTERS = (
@@ -101,11 +102,11 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'compressor',
     'horizon',
-    'openstack_dashboard.dashboards.project',
+    # 'openstack_dashboard.dashboards.project',
     'openstack_dashboard.dashboards.admin',
     'openstack_dashboard.dashboards.settings',
     'openstack_auth',
-    'ganeti_dashboard.dashboards.project'
+    'ganeti_dashboard.dashboards.project',
 )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

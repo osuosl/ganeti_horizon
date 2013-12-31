@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 
 import horizon
 
-from project import dashboard
+from ganeti_dashboard.dashboards.project import dashboard
 
 
 class Instances(horizon.Panel):
