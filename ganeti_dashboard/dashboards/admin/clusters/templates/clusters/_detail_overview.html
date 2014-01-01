@@ -1,0 +1,27 @@
+{% load i18n sizeformat %}
+{% load url from future %}
+
+<h3>{% trans "Cluster Overview" %}</h3>
+
+<div class="status row-fluid detail">
+    <h4>{% trans "Info" %}</h4>
+    <hr class="header_rule">
+    <dl>
+        <dt>{% trans "Name" %}</dt>
+        <dd>{{ cluster.name }}</dd>
+        <dt>{% trans "UUID" %}</dt>
+        <dd>{{ cluster.uuid }}</dd>
+        <dt>{% trans "Architecture" %}</dt>
+        <dd>{{ cluster.architecture|join:", " }}</dd>
+        <dt>{% trans "Ganeti Version" %}</dt>
+        <dd>{{ cluster.software_version }}</dd>
+        <dt>{% trans "Default hypervisor" %}</dt>
+        <dd>{{ cluster.default_hypervisor }}</dd>
+        <dt>{% trans "Enabled hypervisors" %}</dt>
+        <dd>{{ cluster.enabled_hypervisors|join:", " }}</dd>
+        <dt>{% trans "Master Node" %}</dt>
+        <dd>{{ cluster.master }}</dd>
+        <dt>{% trans "Created" %}</dt>
+        <dd>{{ cluster.ctime }}</dd>
+    </dl>
+</div>

@@ -2,7 +2,10 @@ import logging
 import os
 import sys
 
-from openstack_dashboard import exceptions
+from openstack_dashboard import exceptions as openstack_exceptions
+from ganeti_dashboard import exceptions as ganeti_exceptions
+
+RECOVERABLE = ganeti_exceptions.RECOVERABLE + openstack_exceptions.RECOVERABLE
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 BIN_DIR = os.path.abspath(os.path.join(ROOT_PATH, '..', 'bin'))
@@ -36,9 +39,9 @@ HORIZON_CONFIG = {
     'user_home': 'openstack_dashboard.views.get_user_home',
     'ajax_queue_limit': 10,
     'help_url': "http://docs.openstack.org",
-    'exceptions': {'recoverable': exceptions.RECOVERABLE,
-                   'not_found': exceptions.NOT_FOUND,
-                   'unauthorized': exceptions.UNAUTHORIZED},
+    'exceptions': {'recoverable': RECOVERABLE,
+                   'not_found': openstack_exceptions.NOT_FOUND,
+                   'unauthorized': openstack_exceptions.UNAUTHORIZED},
 }
 
 MIDDLEWARE_CLASSES = (
@@ -103,10 +106,11 @@ INSTALLED_APPS = (
     'compressor',
     'horizon',
     # 'openstack_dashboard.dashboards.project',
-    'openstack_dashboard.dashboards.admin',
+    # 'openstack_dashboard.dashboards.admin',
     'openstack_dashboard.dashboards.settings',
     'openstack_auth',
     'ganeti_dashboard.dashboards.project',
+    'ganeti_dashboard.dashboards.admin',
 )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
