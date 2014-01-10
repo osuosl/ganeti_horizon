@@ -1,0 +1,13 @@
+{% extends 'admin/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Instances" %}{% endblock %}
+
+{% block page_header %}
+  {% include "horizon/common/_page_header.html" with title=_("Instances") %}
+{% endblock page_header %}
+
+{% block admin_main %}
+    {{ table.render }}
+{% endblock %}
+
+
