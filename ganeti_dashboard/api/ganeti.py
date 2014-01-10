@@ -30,6 +30,8 @@ import socket
 
 import requests
 
+from django.conf import settings
+
 
 GANETI_RAPI_PORT = 5080
 GANETI_RAPI_VERSION = 2
@@ -149,6 +151,7 @@ def prepare_query(query):
         elif isinstance(value, dict):
             raise ValueError("Invalid query data type %r" %
                              type(value).__name__)
+
 
 
 class GanetiRapiClient(object):  # pylint: disable-msg=R0904
@@ -1666,3 +1669,21 @@ class GanetiRapiClient(object):  # pylint: disable-msg=R0904
         return self._SendRequest("get", ("/%s/query/%s/fields" %
                                          (GANETI_RAPI_VERSION, what)),
                                  query=query)
+
+
+def ganeticlient(host, username=None, password=None, timeout=10):
+    client = GanetiRapiClient(
+        host or settings.CLUSTER['hostname'],
+        username=username or settings.CLUSTER['username'],
+        password=password or settings.CLUSTER['password'],
+        timeout=timeout,
+    )
+    return client
+
+def cluster_info(host, **kwargs):
+    return ganeticlient(host).GetInfo(**kwargs)
+
+def instance_list(host, bulk=True, **kwargs):
+    # Set bulk to True if not specified
+    return ganeticlient(host).GetInstances(bulk=bulk, **kwargs)
+
