@@ -7,6 +7,6 @@
 {% endblock page_header %}
 
 {% block main %}
-    <a href="{% url 'horizon:admin:clusters:detail' cluster.hostname %}">Detail Page to ganeti.example.org</a>
+    <a href="{% url 'horizon:admin:clusters:detail' cluster.hostname %}">Detail Page to {{ cluster.hostname }}</a>
 {% endblock %}
 
