@@ -32,6 +32,8 @@ import requests
 
 from django.conf import settings
 
+from horizon.utils.memoized import memoized
+
 
 GANETI_RAPI_PORT = 5080
 GANETI_RAPI_VERSION = 2
@@ -1680,10 +1682,13 @@ def ganeticlient(host, username=None, password=None, timeout=10):
     )
     return client
 
+@memoized
 def cluster_info(host, **kwargs):
     return ganeticlient(host).GetInfo(**kwargs)
 
+@memoized
 def instance_list(host, bulk=True, **kwargs):
     # Set bulk to True if not specified
     return ganeticlient(host).GetInstances(bulk=bulk, **kwargs)
+
 
