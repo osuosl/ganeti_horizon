@@ -15,7 +15,7 @@ class IndexView(views.APIView):
     def get_data(self, request, context, *args, **kwargs):
         return {'cluster': {'hostname': settings.CLUSTER['host']}}
 
-class DetailView(tabs.TabView):
+class DetailView(tabs.TabbedTableView):
     tab_group_class = cluster_tabs.ClusterDetailTabs
     template_name = 'admin/clusters/detail.html'
 
