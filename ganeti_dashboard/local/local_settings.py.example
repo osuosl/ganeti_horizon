@@ -32,8 +32,8 @@ LOCAL_PATH = os.path.dirname(os.path.abspath(__file__))
 # behind a load-balancer). Either you have to make sure that a session gets all
 # requests routed to the same dashboard instance or you set the same SECRET_KEY
 # for all of them.
-# from horizon.utils import secret_key
-# SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))
+from horizon.utils import secret_key
+SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))
 
 # We recommend you use memcached for development; otherwise after every reload
 # of the django development server, you will have to login again. To use
@@ -56,6 +56,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #     ('http://cluster1.example.com:5000/v2.0', 'cluster1'),
 #     ('http://cluster2.example.com:5000/v2.0', 'cluster2'),
 # ]
+
+CLUSTER = {
+    "host": "ganeti.example.org",
+    "port": 5800,
+    "username": "vagrant",
+    "password": "vagrant"
+}
 
 OPENSTACK_HOST = "127.0.0.1"
 OPENSTACK_KEYSTONE_URL = "http://%s:5000/v2.0" % OPENSTACK_HOST
