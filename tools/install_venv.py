@@ -25,26 +25,26 @@ import sys
 import install_venv_common as install_venv  # noqa
 
 
-def print_help(venv, root):
+def print_help(venv, root, project="Ganeti Horizon"):
     help = """
-    Openstack development environment setup is complete.
+    {project} development environment setup is complete.
 
-    Openstack development uses virtualenv to track and manage Python
+    {project} development uses virtualenv to track and manage Python
     dependencies while in development and testing.
 
-    To activate the Openstack virtualenv for the extent of your current shell
+    To activate the {project} virtualenv for the extent of your current shell
     session you can run:
 
-    $ source %s/bin/activate
+    $ source {venv}/bin/activate
 
     Or, if you prefer, you can run commands in the virtualenv on a case by case
     basis by running:
 
-    $ %s/tools/with_venv.sh <your command>
+    $ {root}/tools/with_venv.sh <your command>
 
     Also, make test will automatically use the virtualenv.
     """
-    print(help % (venv, root))
+    print(help.format(venv=venv, root=root, project=project))
 
 
 def main(argv):
@@ -59,7 +59,7 @@ def main(argv):
     pip_requires = os.path.join(root, 'requirements.txt')
     test_requires = os.path.join(root, 'test-requirements.txt')
     py_version = "python%s.%s" % (sys.version_info[0], sys.version_info[1])
-    project = 'Openstack'
+    project = 'Ganeti Horizon'
     install = install_venv.InstallVenv(root, venv, pip_requires, test_requires,
                                        py_version, project)
     options = install.parse_args(argv)
@@ -67,7 +67,7 @@ def main(argv):
     install.check_dependencies()
     install.create_virtualenv(no_site_packages=options.no_site_packages)
     install.install_dependencies()
-    print_help(venv, root)
+    print_help(venv, root, project)
 
 if __name__ == '__main__':
     main(sys.argv)
