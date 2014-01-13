@@ -15,6 +15,9 @@ required to run |gh|::
 
     $ python tools/install_venv.py
 
+You will now need to configure settings, and configure |gh| to connect to your
+Ganeti cluster and Keystone.
+
 Settings
 --------
 
@@ -24,6 +27,9 @@ You can find an example file in there named `local_settings.py.example`.
     $ cp ganeti_dashboard/local/local_settings.py.example ganeti_dashboard/local/local_settings.py
 
 You can add your cluster's authentication information to `local_settings.py`.
+
+You will also need to configure the keystone endpoint as |gh| uses keystone for
+authentication.
 
 .. note:: |gh| only supports a single cluster at this time.
 
