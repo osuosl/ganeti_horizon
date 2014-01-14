@@ -2,18 +2,19 @@ from django.core.urlresolvers import reverse
 
 from horizon import exceptions
 from horizon import tabs
-from horizon import views
+from horizon import tables
 
 from ganeti_dashboard import api
+from ganeti_dashboard.dashboards.admin.clusters import tables as cluster_tables
 from ganeti_dashboard.dashboards.admin.clusters import tabs as cluster_tabs
 
 
-class IndexView(views.APIView):
+class IndexView(tables.DataTableView):
+    table_class = cluster_tables.AdminClustersTable
     template_name = 'admin/clusters/index.html'
 
     def get_data(self, *args, **kwargs):
-        clusters = api.ganeti.cluster_list()
-        return {'cluster': {'hostname': clusters[0]['name']}}
+        return api.ganeti.cluster_list()
 
 
 class DetailView(tabs.TabbedTableView):

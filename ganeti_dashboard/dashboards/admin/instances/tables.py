@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.template.defaultfilters import title
 from django.utils.translation import ugettext_lazy as _
 
@@ -20,6 +21,11 @@ def get_memory(instance):
     min_mem = mbformat(min_mem)
     max_mem = mbformat(max_mem)
     return "{min} - {max}".format(min=min_mem, max=max_mem)
+
+def get_cluster_link(instance):
+    kwargs = {'cluster_hostname': instance['cluster']}
+    link = reverse("horizon:admin:clusters:detail", kwargs=kwargs)
+    return link
 
 class AdminInstancesTable(tables.DataTable):
     STATUS_CHOICES = (
@@ -52,6 +58,8 @@ class AdminInstancesTable(tables.DataTable):
     )
 
     name = tables.Column("name", verbose_name=_("Name"))
+    cluster = tables.Column("cluster", verbose_name=_("Cluster"),
+        link=get_cluster_link)
     status = tables.Column("status", filters=(title,),
         verbose_name=_("Status"), status=True,
         status_choices=STATUS_CHOICES, display_choices=DISPLAY_CHOICES)
@@ -60,10 +68,9 @@ class AdminInstancesTable(tables.DataTable):
     cpus = tables.Column(get_beparams('vcpus'), verbose_name=_("CPU's"))
     memory = tables.Column(get_memory, verbose_name=_("Memory"))
 
-
     class Meta:
         name = "instances"
         verbose_name= _("Instances")
 
     def get_object_id(self, datum):
-        return datum['uuid']
+        return datum['name']

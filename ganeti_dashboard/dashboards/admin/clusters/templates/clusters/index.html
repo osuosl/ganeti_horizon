@@ -6,7 +6,7 @@
   {% include "horizon/common/_page_header.html" with title=_("Clusters") %}
 {% endblock page_header %}
 
-{% block main %}
-    <a href="{% url 'horizon:admin:clusters:detail' cluster.hostname %}">Detail Page to {{ cluster.hostname }}</a>
+{% block admin_main %}
+    {{ table.render }}
 {% endblock %}
 
