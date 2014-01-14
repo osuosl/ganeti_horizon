@@ -31,8 +31,6 @@ You can add your cluster's authentication information to `local_settings.py`.
 You will also need to configure the keystone endpoint as |gh| uses keystone for
 authentication.
 
-.. note:: |gh| only supports a single cluster at this time.
-
 Development
 -----------
 
