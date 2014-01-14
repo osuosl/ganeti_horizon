@@ -57,11 +57,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #     ('http://cluster2.example.com:5000/v2.0', 'cluster2'),
 # ]
 
-CLUSTER = {
-    "host": "ganeti.example.org",
-    "port": 5800,
-    "username": "vagrant",
-    "password": "vagrant"
+CLUSTERS = {
+    "ganeti.example.org": {
+        "port": 5800,
+        "username": "vagrant",
+        "password": "vagrant"
+    },
 }
 
 OPENSTACK_HOST = "127.0.0.1"

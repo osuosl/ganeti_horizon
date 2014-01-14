@@ -1,5 +1,4 @@
 from django.core.urlresolvers import reverse
-from django.conf import settings
 
 from horizon import exceptions
 from horizon import tabs
@@ -12,8 +11,10 @@ from ganeti_dashboard.dashboards.admin.clusters import tabs as cluster_tabs
 class IndexView(views.APIView):
     template_name = 'admin/clusters/index.html'
 
-    def get_data(self, request, context, *args, **kwargs):
-        return {'cluster': {'hostname': settings.CLUSTER['host']}}
+    def get_data(self, *args, **kwargs):
+        clusters = api.ganeti.cluster_list()
+        return {'cluster': {'hostname': clusters[0]['name']}}
+
 
 class DetailView(tabs.TabbedTableView):
     tab_group_class = cluster_tabs.ClusterDetailTabs

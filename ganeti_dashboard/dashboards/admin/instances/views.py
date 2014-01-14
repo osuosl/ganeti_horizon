@@ -12,10 +12,11 @@ class IndexView(tables.DataTableView):
     template_name = 'admin/instances/index.html'
 
     def get_data(self):
-        cluster = settings.CLUSTER.get('host')
+        clusters = api.ganeti.cluster_list(bulk=False)
         instances = []
         try:
-            instances = api.ganeti.instance_list(cluster)
+            for cluster in clusters:
+                instances += api.ganeti.instance_list(cluster['name'])
         except Exception as e:
             redirect = reverse('horizon:admin:instances:index')
             exceptions.handle(self.request, e, redirect=redirect)

@@ -1673,11 +1673,22 @@ class GanetiRapiClient(object):  # pylint: disable-msg=R0904
                                  query=query)
 
 
+@memoized
+def cluster_list(bulk=True):
+    clusters = []
+    for hostname in settings.CLUSTERS.iterkeys():
+        if bulk:
+            cluster = cluster_info(hostname)
+        else:
+            cluster = {'name': hostname}
+        clusters.append(cluster)
+    return clusters
+
 def ganeticlient(host, username=None, password=None, timeout=10):
     client = GanetiRapiClient(
-        host or settings.CLUSTER['hostname'],
-        username=username or settings.CLUSTER['username'],
-        password=password or settings.CLUSTER['password'],
+        host=host or settings.CLUSTERS[host]['hostname'],
+        username=username or settings.CLUSTERS[host]['username'],
+        password=password or settings.CLUSTERS[host]['password'],
         timeout=timeout,
     )
     return client
@@ -1689,6 +1700,9 @@ def cluster_info(host, **kwargs):
 @memoized
 def instance_list(host, bulk=True, **kwargs):
     # Set bulk to True if not specified
-    return ganeticlient(host).GetInstances(bulk=bulk, **kwargs)
+    instances = ganeticlient(host).GetInstances(bulk=bulk, **kwargs)
+    for instance in instances:
+        instance.update(cluster=host)
+    return instances
 
 
