@@ -6,8 +6,8 @@ import horizon
 class Admin(horizon.Dashboard):
     name = _("Admin")
     slug = "admin"
-    panels = ("clusters", "instances")
-    default_panel = "clusters"
+    panels = ("overview", "clusters", "instances")
+    default_panel = "overview"
 
 
 horizon.register(Admin)
