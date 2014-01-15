@@ -1,9 +1,11 @@
 from django.conf.urls import patterns  # noqa
 from django.conf.urls import url  # noqa
 
-from .views import IndexView
+from ganeti_dashboard.dashboards.admin.instances import views
+from ganeti_dashboard.dashboards.admin.clusters.urls import CLUSTERS
 
+INSTANCE = CLUSTERS % 'instances/(?P<instance>[^/]+)/%s'
 
 urlpatterns = patterns('',
-    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^$', views.IndexView.as_view(), name='index'),
 )
